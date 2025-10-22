@@ -1,0 +1,6 @@
+{
+    "parent": "tome_of_wonders:block/whirlibox",
+    "textures": {
+        "front": "tome_of_wonders:block/whirlibox_front_active"
+    }
+}

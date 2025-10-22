@@ -1,0 +1,7 @@
+{
+  "parent": "item/handheld",
+  "textures": {
+    "layer0": "tome_of_wonders:item/lollipop",
+    "particle": "tome_of_wonders:item/lollipop"
+  }
+}

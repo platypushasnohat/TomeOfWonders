@@ -1,0 +1,9 @@
+{
+  "variants": {
+    "": [
+      {
+        "model": "tome_of_wonders:block/whirligig"
+      }
+    ]
+  }
+}

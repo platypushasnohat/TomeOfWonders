@@ -1,0 +1,15 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "com.platypushasnohat.tome_of_wonders.mixins",
+  "compatibilityLevel": "JAVA_17",
+  "refmap": "tome_of_wonders.refmap.json",
+  "mixins": [
+    "PoseMixin"
+  ],
+  "client": [
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

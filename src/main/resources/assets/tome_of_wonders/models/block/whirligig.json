@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/block",
+  "textures": {
+    "particle": "tome_of_wonders:block/whirligig"
+  }
+}

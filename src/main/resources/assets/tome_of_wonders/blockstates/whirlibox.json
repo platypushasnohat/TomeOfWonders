@@ -1,0 +1,50 @@
+{
+  "variants": {
+    "facing=down,powered=false": {
+      "model": "tome_of_wonders:block/whirlibox",
+      "x": 90
+    },
+    "facing=down,powered=true": {
+      "model": "tome_of_wonders:block/whirlibox_on",
+      "x": 90
+    },
+    "facing=east,powered=false": {
+      "model": "tome_of_wonders:block/whirlibox",
+      "y": 90
+    },
+    "facing=east,powered=true": {
+      "model": "tome_of_wonders:block/whirlibox_on",
+      "y": 90
+    },
+    "facing=north,powered=false": {
+      "model": "tome_of_wonders:block/whirlibox"
+    },
+    "facing=north,powered=true": {
+      "model": "tome_of_wonders:block/whirlibox_on"
+    },
+    "facing=south,powered=false": {
+      "model": "tome_of_wonders:block/whirlibox",
+      "y": 180
+    },
+    "facing=south,powered=true": {
+      "model": "tome_of_wonders:block/whirlibox_on",
+      "y": 180
+    },
+    "facing=up,powered=false": {
+      "model": "tome_of_wonders:block/whirlibox",
+      "x": 270
+    },
+    "facing=up,powered=true": {
+      "model": "tome_of_wonders:block/whirlibox_on",
+      "x": 270
+    },
+    "facing=west,powered=false": {
+      "model": "tome_of_wonders:block/whirlibox",
+      "y": 270
+    },
+    "facing=west,powered=true": {
+      "model": "tome_of_wonders:block/whirlibox_on",
+      "y": 270
+    }
+  }
+}

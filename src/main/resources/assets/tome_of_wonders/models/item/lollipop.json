@@ -1,0 +1,21 @@
+{
+  "parent": "item/handheld",
+  "loader": "forge:separate_transforms",
+  "textures": {
+    "layer0": "tome_of_wonders:item/lollipop"
+  },
+  "base": {
+    "parent": "tome_of_wonders:item/lollipop_handheld"
+  },
+  "perspectives": {
+    "gui": {
+      "parent": "tome_of_wonders:item/lollipop_gui"
+    },
+    "fixed": {
+      "parent": "tome_of_wonders:item/lollipop_gui"
+    },
+    "ground": {
+      "parent": "tome_of_wonders:item/lollipop_gui"
+    }
+  }
+}
