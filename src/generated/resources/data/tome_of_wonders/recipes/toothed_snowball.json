@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "#": {
+      "item": "minecraft:snowball"
+    },
+    "X": {
+      "item": "tome_of_wonders:squill_tooth"
+    }
+  },
+  "pattern": [
+    " # ",
+    "#X#",
+    " # "
+  ],
+  "result": {
+    "count": 4,
+    "item": "tome_of_wonders:toothed_snowball"
+  },
+  "show_notification": true
+}

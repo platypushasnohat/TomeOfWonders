@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "tome_of_wonders:item/squill_bucket"
+  }
+}

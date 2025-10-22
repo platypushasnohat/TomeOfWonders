@@ -1,0 +1,35 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_squill_tooth": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "tome_of_wonders:squill_tooth"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "tome_of_wonders:toothed_snowball"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_squill_tooth",
+      "has_the_recipe"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "tome_of_wonders:toothed_snowball"
+    ]
+  },
+  "sends_telemetry_event": false
+}

@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "redstone",
+  "key": {
+    "#": {
+      "tag": "minecraft:stone_tool_materials"
+    },
+    "X": {
+      "item": "tome_of_wonders:whirligig"
+    },
+    "Y": {
+      "tag": "forge:dusts/redstone"
+    }
+  },
+  "pattern": [
+    "###",
+    "#X#",
+    "#Y#"
+  ],
+  "result": {
+    "item": "tome_of_wonders:whirlibox"
+  },
+  "show_notification": true
+}

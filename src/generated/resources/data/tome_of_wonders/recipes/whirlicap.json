@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "#": {
+      "item": "minecraft:leather_helmet"
+    },
+    "X": {
+      "item": "tome_of_wonders:whirligig"
+    }
+  },
+  "pattern": [
+    " X ",
+    " # "
+  ],
+  "result": {
+    "item": "tome_of_wonders:whirlicap"
+  },
+  "show_notification": true
+}
