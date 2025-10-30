@@ -51,7 +51,7 @@ public class TomeOfWonders {
         TomeOfWondersTab.CREATIVE_TAB.register(modEventBus);
 
         MinecraftForge.EVENT_BUS.register(this);
-        MinecraftForge.EVENT_BUS.register(new MiscEvents());
+        MinecraftForge.EVENT_BUS.register(new ForgeEvents());
     }
 
     public void commonSetup(final FMLCommonSetupEvent event) {

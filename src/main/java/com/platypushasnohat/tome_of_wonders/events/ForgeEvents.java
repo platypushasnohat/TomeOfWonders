@@ -14,7 +14,7 @@ import net.minecraftforge.fml.common.Mod;
 import java.util.UUID;
 
 @Mod.EventBusSubscriber(modid = TomeOfWonders.MOD_ID, bus = Mod.EventBusSubscriber.Bus.FORGE)
-public class MiscEvents {
+public class ForgeEvents {
 
     private static final UUID WHIRLICAP_MODIFIER = UUID.fromString("5b397cd8-4dca-47a0-9496-e6dfb00d2387");
     private static final UUID WHIRLICAP_MODIFIER_SLOW_FALLING = UUID.fromString("494583ff-efd5-4146-be53-4814d6c407cf");
