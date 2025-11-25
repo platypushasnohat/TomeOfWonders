@@ -36,7 +36,7 @@ public class TOWBiomeModifierProvider {
         // add spawns
         addSpawn(context, "baitfish", TOWBiomeTags.HAS_BAITFISH, new MobSpawnSettings.SpawnerData(TOWEntities.BAITFISH.get(), 1, 1, 1));
         addSpawn(context, "flying_fish", TOWBiomeTags.HAS_FLYING_FISH, new MobSpawnSettings.SpawnerData(TOWEntities.FLYING_FISH.get(), 3, 2, 2));
-        addSpawn(context, "squill", TOWBiomeTags.HAS_SQUILL, new MobSpawnSettings.SpawnerData(TOWEntities.SQUILL.get(), 1, 48, 48));
+        addSpawn(context, "squill", TOWBiomeTags.HAS_SQUILL, new MobSpawnSettings.SpawnerData(TOWEntities.SQUILL.get(), 1, 1, 1));
     }
 
     private static void addSpawn(BootstapContext<BiomeModifier> context, String name, TagKey<Biome> biomes, MobSpawnSettings.SpawnerData... spawns) {

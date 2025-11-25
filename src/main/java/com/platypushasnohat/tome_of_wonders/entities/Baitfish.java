@@ -1,5 +1,6 @@
 package com.platypushasnohat.tome_of_wonders.entities;
 
+import com.platypushasnohat.tome_of_wonders.TomeOfWondersConfig;
 import com.platypushasnohat.tome_of_wonders.entities.ai.goals.CustomRandomSwimGoal;
 import com.platypushasnohat.tome_of_wonders.registry.TOWEntities;
 import com.platypushasnohat.tome_of_wonders.registry.TOWItems;
@@ -53,7 +54,7 @@ public class Baitfish extends AbstractSchoolingFish {
     }
 
     @Override
-    protected PathNavigation createNavigation(Level level) {
+    protected @NotNull PathNavigation createNavigation(@NotNull Level level) {
         return new WaterBoundPathNavigation(this, level);
     }
 
@@ -66,19 +67,19 @@ public class Baitfish extends AbstractSchoolingFish {
         this.goalSelector.addGoal(4, new FollowFlockLeaderGoal(this));
     }
 
-    public static AttributeSupplier.Builder createAttributes() {
+    public static AttributeSupplier.@NotNull Builder createAttributes() {
         return Mob.createMobAttributes()
                 .add(Attributes.MAX_HEALTH, 2.0D)
                 .add(Attributes.MOVEMENT_SPEED, 1.0F);
     }
 
     @Override
-    public ItemStack getBucketItemStack() {
+    public @NotNull ItemStack getBucketItemStack() {
         return new ItemStack(TOWItems.BAITFISH_BUCKET.get());
     }
 
     @Override
-    public void travel(Vec3 travelVec) {
+    public void travel(@NotNull Vec3 travelVec) {
         if (this.isEffectiveAi() && this.isInWater()) {
             this.moveRelative(this.getSpeed(), travelVec);
             this.move(MoverType.SELF, this.getDeltaMovement());
@@ -105,9 +106,7 @@ public class Baitfish extends AbstractSchoolingFish {
     public void tick() {
         super.tick();
 
-        if (this.level().isClientSide()) {
-            this.setupAnimationStates();
-        }
+        if (this.level().isClientSide) this.setupAnimationStates();
     }
 
     private void setupAnimationStates() {
@@ -133,13 +132,13 @@ public class Baitfish extends AbstractSchoolingFish {
     }
 
     @Override
-    public void addAdditionalSaveData(CompoundTag compoundTag) {
+    public void addAdditionalSaveData(@NotNull CompoundTag compoundTag) {
         super.addAdditionalSaveData(compoundTag);
         compoundTag.putInt("Variant", this.getVariant());
     }
 
     @Override
-    public void readAdditionalSaveData(CompoundTag compoundTag) {
+    public void readAdditionalSaveData(@NotNull CompoundTag compoundTag) {
         super.readAdditionalSaveData(compoundTag);
         this.setVariant(compoundTag.getInt("Variant"));
     }
@@ -153,7 +152,7 @@ public class Baitfish extends AbstractSchoolingFish {
     }
 
     @Override
-    protected float getStandingEyeHeight(Pose pose, EntityDimensions size) {
+    protected float getStandingEyeHeight(@NotNull Pose pose, EntityDimensions size) {
         return size.height * 0.5F;
     }
 
@@ -164,9 +163,9 @@ public class Baitfish extends AbstractSchoolingFish {
 
     @Nullable
     @Override
-    public SpawnGroupData finalizeSpawn(ServerLevelAccessor level, DifficultyInstance difficulty, MobSpawnType spawnType, @Nullable SpawnGroupData spawnData, @Nullable CompoundTag compoundTag) {
+    public SpawnGroupData finalizeSpawn(@NotNull ServerLevelAccessor level, @NotNull DifficultyInstance difficulty, @NotNull MobSpawnType spawnType, @Nullable SpawnGroupData spawnData, @Nullable CompoundTag compoundTag) {
         this.setVariant(level().getRandom().nextInt(1));
-        if (spawnType == MobSpawnType.CHUNK_GENERATION || spawnType == MobSpawnType.NATURAL) {
+        if ((spawnType == MobSpawnType.CHUNK_GENERATION || spawnType == MobSpawnType.NATURAL) && TomeOfWondersConfig.BAITFISH_SCHOOL_SPAWNING.get()) {
             int schoolCount = (int) (this.getMaxSchoolSize() * this.getRandom().nextFloat());
             if (schoolCount > 0 && !this.level().isClientSide()) {
                 for (int i = 0; i < schoolCount; i++) {

@@ -16,7 +16,8 @@ import org.jetbrains.annotations.NotNull;
 import java.util.HashSet;
 import java.util.Set;
 
-import static com.platypushasnohat.tome_of_wonders.registry.TOWBlocks.*;
+import static com.platypushasnohat.tome_of_wonders.registry.TOWBlocks.WHIRLIBOX;
+import static com.platypushasnohat.tome_of_wonders.registry.TOWBlocks.WHIRLIGIG;
 
 public class TOWBlockLootTableProvider extends BlockLootSubProvider {
 

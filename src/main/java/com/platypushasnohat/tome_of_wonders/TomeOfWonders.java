@@ -1,7 +1,7 @@
 package com.platypushasnohat.tome_of_wonders;
 
 import com.platypushasnohat.tome_of_wonders.data.*;
-import com.platypushasnohat.tome_of_wonders.events.*;
+import com.platypushasnohat.tome_of_wonders.events.ForgeEvents;
 import com.platypushasnohat.tome_of_wonders.registry.*;
 import com.platypushasnohat.tome_of_wonders.utils.ClientProxy;
 import com.platypushasnohat.tome_of_wonders.utils.CommonProxy;
@@ -38,7 +38,7 @@ public class TomeOfWonders {
         modEventBus.addListener(this::clientSetup);
         modEventBus.addListener(this::dataSetup);
 
-        context.registerConfig(ModConfig.Type.COMMON, TomeOfWondersConfig.COMMON_CONFIG);
+        context.registerConfig(ModConfig.Type.COMMON, TomeOfWondersConfig.COMMON_CONFIG, "tome-of-wonders-general.toml");
 
         TOWItems.ITEMS.register(modEventBus);
         TOWBlocks.BLOCKS.register(modEventBus);

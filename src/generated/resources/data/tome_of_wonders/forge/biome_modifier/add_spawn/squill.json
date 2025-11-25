@@ -3,8 +3,8 @@
   "biomes": "#tome_of_wonders:has_mob/squill",
   "spawners": {
     "type": "tome_of_wonders:squill",
-    "maxCount": 48,
-    "minCount": 48,
+    "maxCount": 1,
+    "minCount": 1,
     "weight": 1
   }
 }

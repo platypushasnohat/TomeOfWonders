@@ -5,6 +5,7 @@ import com.platypushasnohat.tome_of_wonders.entities.ai.goals.SquillAttackGoal;
 import com.platypushasnohat.tome_of_wonders.entities.ai.goals.SquillPanicGoal;
 import com.platypushasnohat.tome_of_wonders.entities.ai.goals.SquillWanderGoal;
 import com.platypushasnohat.tome_of_wonders.entities.ai.utils.SquillMoveControl;
+import com.platypushasnohat.tome_of_wonders.registry.TOWEntities;
 import com.platypushasnohat.tome_of_wonders.registry.TOWItems;
 import com.platypushasnohat.tome_of_wonders.registry.TOWParticles;
 import com.platypushasnohat.tome_of_wonders.registry.TOWSoundEvents;
@@ -51,6 +52,7 @@ import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+@SuppressWarnings("deprecation")
 public class Squill extends PathfinderMob implements FlyingAnimal, Bucketable {
 
     private static final EntityDataAccessor<Boolean> ATTACKING = SynchedEntityData.defineId(Squill.class, EntityDataSerializers.BOOLEAN);
@@ -97,20 +99,20 @@ public class Squill extends PathfinderMob implements FlyingAnimal, Bucketable {
     }
 
     @Override
-    protected void playStepSound(BlockPos pos, BlockState state) {
+    protected void playStepSound(@NotNull BlockPos pos, @NotNull BlockState state) {
     }
 
     @Override
-    public boolean causeFallDamage(float fallDistance, float multiplier, DamageSource source) {
+    public boolean causeFallDamage(float fallDistance, float multiplier, @NotNull DamageSource source) {
         return false;
     }
 
     @Override
-    protected void checkFallDamage(double y, boolean onGround, BlockState state, BlockPos pos) {
+    protected void checkFallDamage(double y, boolean onGround, @NotNull BlockState state, @NotNull BlockPos pos) {
     }
 
     @Override
-    protected @NotNull PathNavigation createNavigation(Level level) {
+    protected @NotNull PathNavigation createNavigation(@NotNull Level level) {
         FlyingPathNavigation navigation = new FlyingPathNavigation(this, level) {
             public boolean isStableDestination(BlockPos pos) {
                 return !level().getBlockState(pos.below(128)).isAir();
@@ -123,7 +125,7 @@ public class Squill extends PathfinderMob implements FlyingAnimal, Bucketable {
     }
 
     @Override
-    public void travel(Vec3 travelVector) {
+    public void travel(@NotNull Vec3 travelVector) {
         if (this.isEffectiveAi()) {
             this.moveRelative(0.1F, travelVector);
             this.move(MoverType.SELF, this.getDeltaMovement());
@@ -157,7 +159,7 @@ public class Squill extends PathfinderMob implements FlyingAnimal, Bucketable {
     }
 
     @Override
-    public boolean hurt(DamageSource source, float amount) {
+    public boolean hurt(@NotNull DamageSource source, float amount) {
         if (super.hurt(source, amount) && this.getLastHurtByMob() != null) {
             if (!this.level().isClientSide) {
                 if (this.getHealth() <= this.getMaxHealth() * 0.25F && this.getCombatCooldown() <= 0) {
@@ -171,30 +173,6 @@ public class Squill extends PathfinderMob implements FlyingAnimal, Bucketable {
         } else {
             return false;
         }
-    }
-
-    public static boolean canSpawn(EntityType<Squill> entityType, LevelAccessor level, MobSpawnType spawnType, BlockPos pos, RandomSource random) {
-        return checkMobSpawnRules(entityType, level, spawnType, pos, random) && wholeHitboxCanSeeSky(level, pos, 2);
-    }
-
-    public static boolean wholeHitboxCanSeeSky(LevelAccessor level, BlockPos pos, int hitboxRadius) {
-        boolean flag = true;
-        for (int xOffset = -hitboxRadius; xOffset <= hitboxRadius; xOffset++) {
-            for (int zOffset = -hitboxRadius; zOffset <= hitboxRadius; zOffset++) {
-                flag = flag && level.canSeeSky(pos.offset(xOffset, 0, zOffset));
-            }
-        }
-        return flag;
-    }
-
-    @Nullable
-    @Override
-    public SpawnGroupData finalizeSpawn(ServerLevelAccessor level, DifficultyInstance difficulty, MobSpawnType spawnType, @Nullable SpawnGroupData spawnData, @Nullable CompoundTag compoundTag) {
-        int spawnHeight = Math.min((this.blockPosition().getY() + TomeOfWondersConfig.SQUILL_SPAWN_HEIGHT.get()), this.level().getMaxBuildHeight());
-        if (spawnType == MobSpawnType.NATURAL || spawnType == MobSpawnType.CHUNK_GENERATION) {
-            this.moveTo(this.getX(), spawnHeight, this.getZ(), this.getYRot(), this.getXRot());
-        }
-        return super.finalizeSpawn(level, difficulty, spawnType, spawnData, compoundTag);
     }
 
     @Override
@@ -231,12 +209,8 @@ public class Squill extends PathfinderMob implements FlyingAnimal, Bucketable {
         xBodyRotO = xBodyRot;
         prevAlphaProgress = alphaProgress;
 
-        if (this.isAlive() && alphaProgress < 20F) {
-            alphaProgress++;
-        }
-        if (!this.isAlive() && alphaProgress > 0F) {
-            alphaProgress--;
-        }
+        if (this.isAlive() && alphaProgress < 20F) alphaProgress++;
+        if (!this.isAlive() && alphaProgress > 0F) alphaProgress--;
 
         if (this.getCombatCooldown() > 0) {
             this.setCombatCooldown(this.getCombatCooldown() - 1);
@@ -280,7 +254,7 @@ public class Squill extends PathfinderMob implements FlyingAnimal, Bucketable {
     }
 
     @Override
-    public void addAdditionalSaveData(CompoundTag compoundTag) {
+    public void addAdditionalSaveData(@NotNull CompoundTag compoundTag) {
         super.addAdditionalSaveData(compoundTag);
         compoundTag.putBoolean("Attacking", this.isAttacking());
         compoundTag.putBoolean("FromBucket", this.fromBucket());
@@ -288,7 +262,7 @@ public class Squill extends PathfinderMob implements FlyingAnimal, Bucketable {
     }
 
     @Override
-    public void readAdditionalSaveData(CompoundTag compoundTag) {
+    public void readAdditionalSaveData(@NotNull CompoundTag compoundTag) {
         super.readAdditionalSaveData(compoundTag);
         this.setAttacking(compoundTag.getBoolean("Attacking"));
         this.setFromBucket(compoundTag.getBoolean("FromBucket"));
@@ -316,7 +290,7 @@ public class Squill extends PathfinderMob implements FlyingAnimal, Bucketable {
     }
 
     @Override
-    public AABB getBoundingBoxForCulling() {
+    public @NotNull AABB getBoundingBoxForCulling() {
         return this.getBoundingBox().inflate(3, 3, 3);
     }
 
@@ -336,7 +310,7 @@ public class Squill extends PathfinderMob implements FlyingAnimal, Bucketable {
     }
 
     @Override
-    public void saveToBucketTag(ItemStack stack) {
+    public void saveToBucketTag(@NotNull ItemStack stack) {
         Bucketable.saveDefaultDataToBucketTag(this, stack);
         if (this.hasCustomName()) {
             stack.setHoverName(this.getCustomName());
@@ -344,17 +318,17 @@ public class Squill extends PathfinderMob implements FlyingAnimal, Bucketable {
     }
 
     @Override
-    public void loadFromBucketTag(CompoundTag compoundTag) {
+    public void loadFromBucketTag(@NotNull CompoundTag compoundTag) {
         Bucketable.loadDefaultDataFromBucketTag(this, compoundTag);
     }
 
     @Override
-    public ItemStack getBucketItemStack() {
+    public @NotNull ItemStack getBucketItemStack() {
         return TOWItems.SQUILL_BUCKET.get().getDefaultInstance();
     }
 
     @Override
-    public SoundEvent getPickupSound() {
+    public @NotNull SoundEvent getPickupSound() {
         return SoundEvents.BUCKET_FILL_FISH;
     }
 
@@ -395,5 +369,42 @@ public class Squill extends PathfinderMob implements FlyingAnimal, Bucketable {
             return InteractionResult.sidedSuccess(this.level().isClientSide);
         }
         return super.mobInteract(player, hand);
+    }
+
+    public static boolean canSpawn(EntityType<Squill> entityType, LevelAccessor level, MobSpawnType spawnType, BlockPos pos, RandomSource random) {
+        return checkMobSpawnRules(entityType, level, spawnType, pos, random) && wholeHitboxCanSeeSky(level, pos, 2) && random.nextFloat() < 0.2F;
+    }
+
+    public static boolean wholeHitboxCanSeeSky(LevelAccessor level, BlockPos pos, int hitboxRadius) {
+        boolean flag = true;
+        for (int xOffset = -hitboxRadius; xOffset <= hitboxRadius; xOffset++) {
+            for (int zOffset = -hitboxRadius; zOffset <= hitboxRadius; zOffset++) {
+                flag = flag && level.canSeeSky(pos.offset(xOffset, 0, zOffset));
+            }
+        }
+        return flag;
+    }
+
+    @Nullable
+    @Override
+    public SpawnGroupData finalizeSpawn(@NotNull ServerLevelAccessor level, @NotNull DifficultyInstance difficulty, @NotNull MobSpawnType spawnType, @Nullable SpawnGroupData spawnData, @Nullable CompoundTag compoundTag) {
+        int spawnHeight = Math.min((this.blockPosition().getY() + TomeOfWondersConfig.SQUILL_SPAWN_HEIGHT.get()), this.level().getMaxBuildHeight());
+        if (spawnType == MobSpawnType.NATURAL || spawnType == MobSpawnType.CHUNK_GENERATION) {
+            this.moveTo(this.getX(), spawnHeight, this.getZ(), this.getYRot(), this.getXRot());
+            if (TomeOfWondersConfig.SQUILL_SCHOOL_SPAWNING.get()) this.spawnSchool();
+        }
+        return super.finalizeSpawn(level, difficulty, spawnType, spawnData, compoundTag);
+    }
+
+    private void spawnSchool() {
+        int schoolCount = (int) (20 * this.getRandom().nextFloat());
+        if (schoolCount > 0 && !this.level().isClientSide()) {
+            for (int i = 0; i < schoolCount; i++) {
+                float distance = 1.5F;
+                Squill entity = new Squill(TOWEntities.SQUILL.get(), this.level());
+                entity.moveTo(this.getX() + this.getRandom().nextFloat() * distance, this.getY() + this.getRandom().nextFloat() * distance, this.getZ() + this.getRandom().nextFloat() * distance);
+                this.level().addFreshEntity(entity);
+            }
+        }
     }
 }

@@ -1,5 +1,6 @@
 package com.platypushasnohat.tome_of_wonders.entities;
 
+import com.platypushasnohat.tome_of_wonders.TomeOfWondersConfig;
 import com.platypushasnohat.tome_of_wonders.entities.ai.goals.CustomRandomSwimGoal;
 import com.platypushasnohat.tome_of_wonders.entities.ai.goals.FlyingFishFollowLeaderGoal;
 import com.platypushasnohat.tome_of_wonders.entities.ai.goals.FlyingFishGlideGoal;
@@ -44,6 +45,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.List;
 import java.util.stream.Stream;
 
+@SuppressWarnings("deprecation")
 public class FlyingFish extends WaterAnimal implements FlyingAnimal, Bucketable {
 
     private static final EntityDataAccessor<Integer> VARIANT = SynchedEntityData.defineId(FlyingFish.class, EntityDataSerializers.INT);
@@ -70,7 +72,7 @@ public class FlyingFish extends WaterAnimal implements FlyingAnimal, Bucketable 
     }
 
     @Override
-    protected PathNavigation createNavigation(Level level) {
+    protected @NotNull PathNavigation createNavigation(@NotNull Level level) {
         return new WaterBoundPathNavigation(this, level);
     }
 
@@ -90,7 +92,7 @@ public class FlyingFish extends WaterAnimal implements FlyingAnimal, Bucketable 
     }
 
     @Override
-    public void travel(Vec3 travelVec) {
+    public void travel(@NotNull Vec3 travelVec) {
         if (this.isEffectiveAi() && this.isInWater()) {
             this.moveRelative(this.getSpeed(), travelVec);
             this.move(MoverType.SELF, this.getDeltaMovement());
@@ -104,7 +106,7 @@ public class FlyingFish extends WaterAnimal implements FlyingAnimal, Bucketable 
     }
 
     @Override
-    public boolean hurt(DamageSource source, float amount) {
+    public boolean hurt(@NotNull DamageSource source, float amount) {
         boolean hurt = super.hurt(source, amount);
         if (hurt && source.getEntity() != null) {
             this.glideCooldown = 0;
@@ -117,37 +119,37 @@ public class FlyingFish extends WaterAnimal implements FlyingAnimal, Bucketable 
     }
 
     @Override
-    protected InteractionResult mobInteract(Player player, InteractionHand hand) {
+    protected @NotNull InteractionResult mobInteract(@NotNull Player player, @NotNull InteractionHand hand) {
         return Bucketable.bucketMobPickup(player, hand, this).orElse(super.mobInteract(player, hand));
     }
 
     @Override
-    public void saveToBucketTag(ItemStack stack) {
+    public void saveToBucketTag(@NotNull ItemStack stack) {
         Bucketable.saveDefaultDataToBucketTag(this, stack);
     }
 
     @Override
-    public void loadFromBucketTag(CompoundTag compoundTag) {
+    public void loadFromBucketTag(@NotNull CompoundTag compoundTag) {
         Bucketable.loadDefaultDataFromBucketTag(this, compoundTag);
     }
 
     @Override
-    public ItemStack getBucketItemStack() {
+    public @NotNull ItemStack getBucketItemStack() {
         return TOWItems.FLYING_FISH_BUCKET.get().getDefaultInstance();
     }
 
     @Override
-    public SoundEvent getPickupSound() {
+    public @NotNull SoundEvent getPickupSound() {
         return SoundEvents.BUCKET_FILL_FISH;
     }
 
     @Override
-    public boolean causeFallDamage(float fallDistance, float multiplier, DamageSource source) {
+    public boolean causeFallDamage(float fallDistance, float multiplier, @NotNull DamageSource source) {
         return false;
     }
 
     @Override
-    protected void checkFallDamage(double y, boolean onGround, BlockState state, BlockPos pos) {
+    protected void checkFallDamage(double y, boolean onGround, @NotNull BlockState state, @NotNull BlockPos pos) {
     }
 
     @Override
@@ -156,9 +158,7 @@ public class FlyingFish extends WaterAnimal implements FlyingAnimal, Bucketable 
 
         if (this.hasFollowers() && this.level().random.nextInt(200) == 1) {
             List<? extends FlyingFish> list = this.level().getEntitiesOfClass(this.getClass(), this.getBoundingBox().inflate(8.0D, 8.0D, 8.0D));
-            if (list.size() <= 1) {
-                this.schoolSize = 1;
-            }
+            if (list.size() <= 1) this.schoolSize = 1;
         }
 
         if (isGliding()) {
@@ -167,17 +167,11 @@ public class FlyingFish extends WaterAnimal implements FlyingAnimal, Bucketable 
             }
         }
 
-        if (this.leader != null) {
-            this.glideCooldown = this.leader.glideCooldown;
-        }
+        if (this.leader != null) this.glideCooldown = this.leader.glideCooldown;
 
-        if (glideCooldown > 0) {
-            glideCooldown--;
-        }
+        if (glideCooldown > 0) glideCooldown--;
 
-        if (this.level().isClientSide()) {
-            this.setupAnimationStates();
-        }
+        if (this.level().isClientSide) this.setupAnimationStates();
     }
 
     private void setupAnimationStates() {
@@ -206,7 +200,6 @@ public class FlyingFish extends WaterAnimal implements FlyingAnimal, Bucketable 
         if (!isInWaterOrBubble() && this.isAlive()) {
             if (this.onGround() && random.nextFloat() < 0.1F) {
                 this.setDeltaMovement(this.getDeltaMovement().add((this.random.nextFloat() * 2.0F - 1.0F) * 0.2F, 0.5D, (this.random.nextFloat() * 2.0F - 1.0F) * 0.2F));
-                this.setYRot(this.random.nextFloat() * 360.0F);
                 this.playSound(this.getFlopSound(), this.getSoundVolume(), this.getVoicePitch());
             }
         }
@@ -225,10 +218,9 @@ public class FlyingFish extends WaterAnimal implements FlyingAnimal, Bucketable 
         return this.leader != null && this.leader.isAlive();
     }
 
-    public FlyingFish startFollowing(FlyingFish fish) {
+    public void startFollowing(FlyingFish fish) {
         this.leader = fish;
         fish.addFollower();
-        return fish;
     }
 
     public void stopFollowing() {
@@ -279,14 +271,14 @@ public class FlyingFish extends WaterAnimal implements FlyingAnimal, Bucketable 
     }
 
     @Override
-    public void addAdditionalSaveData(CompoundTag compoundTag) {
+    public void addAdditionalSaveData(@NotNull CompoundTag compoundTag) {
         super.addAdditionalSaveData(compoundTag);
         compoundTag.putInt("Variant", this.getVariant());
         compoundTag.putBoolean("FromBucket", this.fromBucket());
     }
 
     @Override
-    public void readAdditionalSaveData(CompoundTag compoundTag) {
+    public void readAdditionalSaveData(@NotNull CompoundTag compoundTag) {
         super.readAdditionalSaveData(compoundTag);
         this.setVariant(compoundTag.getInt("Variant"));
         this.setFromBucket(compoundTag.getBoolean("FromBucket"));
@@ -317,7 +309,7 @@ public class FlyingFish extends WaterAnimal implements FlyingAnimal, Bucketable 
     }
 
     @Override
-    protected float getStandingEyeHeight(Pose pose, EntityDimensions size) {
+    protected float getStandingEyeHeight(@NotNull Pose pose, EntityDimensions size) {
         return size.height * 0.5F;
     }
 
@@ -325,7 +317,7 @@ public class FlyingFish extends WaterAnimal implements FlyingAnimal, Bucketable 
     @Nullable
     public SpawnGroupData finalizeSpawn(@NotNull ServerLevelAccessor level, @NotNull DifficultyInstance difficulty, @NotNull MobSpawnType spawnType, @Nullable SpawnGroupData spawnData, @Nullable CompoundTag compoundTag) {
         this.setVariant(level().getRandom().nextInt(1));
-        if (spawnType == MobSpawnType.CHUNK_GENERATION || spawnType == MobSpawnType.NATURAL) {
+        if ((spawnType == MobSpawnType.CHUNK_GENERATION || spawnType == MobSpawnType.NATURAL) && TomeOfWondersConfig.FLYING_FISH_SCHOOL_SPAWNING.get()) {
             int schoolCount = (int) (this.getMaxSchoolSize() * this.getRandom().nextFloat());
             if (schoolCount > 0 && !this.level().isClientSide()) {
                 for (int i = 0; i < schoolCount; i++) {

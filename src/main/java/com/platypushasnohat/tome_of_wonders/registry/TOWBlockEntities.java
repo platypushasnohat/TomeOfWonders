@@ -1,7 +1,8 @@
 package com.platypushasnohat.tome_of_wonders.registry;
 
 import com.platypushasnohat.tome_of_wonders.TomeOfWonders;
-import com.platypushasnohat.tome_of_wonders.blocks.blockentity.*;
+import com.platypushasnohat.tome_of_wonders.blocks.blockentity.WhirliboxBlockEntity;
+import com.platypushasnohat.tome_of_wonders.blocks.blockentity.WhirligigBlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;

@@ -1,11 +1,16 @@
 package com.platypushasnohat.tome_of_wonders.events;
 
 import com.platypushasnohat.tome_of_wonders.TomeOfWonders;
-import com.platypushasnohat.tome_of_wonders.client.models.*;
-import com.platypushasnohat.tome_of_wonders.client.models.armor.*;
-import com.platypushasnohat.tome_of_wonders.client.particles.*;
-import com.platypushasnohat.tome_of_wonders.client.renderer.*;
-import com.platypushasnohat.tome_of_wonders.client.renderer.blockentity.*;
+import com.platypushasnohat.tome_of_wonders.client.models.BaitfishModel;
+import com.platypushasnohat.tome_of_wonders.client.models.FlyingFishModel;
+import com.platypushasnohat.tome_of_wonders.client.models.SquillModel;
+import com.platypushasnohat.tome_of_wonders.client.models.armor.WhirlicapModel;
+import com.platypushasnohat.tome_of_wonders.client.particles.WhirlibubbleParticle;
+import com.platypushasnohat.tome_of_wonders.client.particles.WhirliwindParticle;
+import com.platypushasnohat.tome_of_wonders.client.renderer.BaitfishRenderer;
+import com.platypushasnohat.tome_of_wonders.client.renderer.FlyingFishRenderer;
+import com.platypushasnohat.tome_of_wonders.client.renderer.SquillRenderer;
+import com.platypushasnohat.tome_of_wonders.client.renderer.blockentity.WhirligigRenderer;
 import com.platypushasnohat.tome_of_wonders.registry.TOWBlockEntities;
 import com.platypushasnohat.tome_of_wonders.registry.TOWEntities;
 import com.platypushasnohat.tome_of_wonders.registry.TOWModelLayers;

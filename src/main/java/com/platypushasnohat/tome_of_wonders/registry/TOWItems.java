@@ -2,7 +2,6 @@ package com.platypushasnohat.tome_of_wonders.registry;
 
 import com.platypushasnohat.tome_of_wonders.TomeOfWonders;
 import com.platypushasnohat.tome_of_wonders.items.*;
-import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.material.Fluids;
